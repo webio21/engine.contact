@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en" class="docs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact™ Engine Documentation</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="docs">
+<script>
+function updateDocsNav(){
+  const hash = window.location.hash || '#getting-started';
+
+  document.querySelectorAll('.docs-nav a').forEach(link => {
+    link.classList.toggle(
+      'active',
+      link.getAttribute('href') === hash
+    );
+  });
+}
+
+window.addEventListener('hashchange', updateDocsNav);
+window.addEventListener('DOMContentLoaded', updateDocsNav);
+</script>
+<div class="docs-shell">
+
+  <a class="docs-brand" href="#top">
+    <img class="brand-mark" src="../logo.png" alt="Contact™">
+
+    <span>
+      <span class="docs-brand-title">CONTACT™ ENGINE</span>
+      <span class="docs-brand-sub">DEVELOPER DOCUMENTATION</span>
+    </span>
+  </a>
+
+  <aside class="docs-sidebar">
+
+    <div class="docs-section-label">Documentation</div>
+
+    <nav class="docs-nav">
+      <a class="active" href="#getting-started">Getting Started</a>
+      <a href="#authentication">Authentication</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#api-reference">API Reference</a>
+      <a href="#models">Models</a>
+      <a href="#verification">Verification</a>
+      <a href="#research">Research</a>
+      <a href="#synthesis">Synthesis</a>
+      <a href="#credits">Credits</a>
+      <a href="#rate-limits">Rate Limits</a>
+      <a href="#errors">Errors</a>
+      <a href="#sdks">SDKs</a>
+    </nav>
+
+    <div class="docs-sidebar-bottom">
+      <div>CONTACT™ ENGINE</div>
+      <a href="https://engine.contact/">engine.contact</a><br>
+      <a href="#api-reference">API Reference ↗</a>
+    </div>
+
+  </aside>
+
+  <main class="docs-main" id="top">
+
+    <header class="docs-topbar">
+
+      <div class="docs-breadcrumb">
+      </div>
+
+      <div class="docs-toplinks">
+        <a href="https://engine.contact/pricing">Pricing</a>
+        <a class="docs-api-btn" href="https://engine.contact/api">Get API</a>
+      </div>
+
+    </header>
+
+    <div class="docs-content">
+
+      <div class="docs-eyebrow">
+        CONTACT™ ENGINE / DEVELOPER PLATFORM
+      </div>
+
+      <h1>
+        Build with Contact Intelligence.
+      </h1>
+
+      <p class="docs-lead">
+        Contact Engine powers the intelligence behind Contact — routing requests across AI models, verifying answers, conducting research, and synthesizing results into reliable outputs.
+      </p>
+
+      <div class="docs-rule"></div>
+
+      <div class="docs-grid">
+
+        <article class="docs-article">
+
+          <section id="getting-started">
+
+            <h2>Getting Started</h2>
+
+            <p>
+              Use Contact Engine when your product needs more than a single model response. Engine can orchestrate multiple models, compare outputs, verify claims, and return a synthesized result through one API.
+            </p>
+
+            <div class="docs-note">
+              Contact Engine is an intelligence engine, not a single-model wrapper. Your application calls one interface while Engine handles routing, analysis, verification, and synthesis.
+            </div>
+
+            <div class="docs-cards">
+
+              <a class="docs-card" href="#quickstart">
+                <div class="docs-card-title">
+                  Quickstart →
+                </div>
+                <p>
+                  Make your first request and receive a synthesized answer.
+                </p>
+              </a>
+
+              <a class="docs-card" href="#api-reference">
+                <div class="docs-card-title">
+                  API Reference →
+                </div>
+                <p>
+                  Explore endpoints, parameters, responses, and errors.
+                </p>
+              </a>
+
+              <a class="docs-card" href="#verification">
+                <div class="docs-card-title">
+                  Verification →
+                </div>
+                <p>
+                  Cross-check model outputs and evaluate answer confidence.
+                </p>
+              </a>
+
+              <a class="docs-card" href="#research">
+                <div class="docs-card-title">
+                  Research →
+                </div>
+                <p>
+                  Run deeper multi-step analysis for complex questions.
+                </p>
+              </a>
+
+            </div>
+
+          </section>
+
+          <section id="authentication">
+
+            <h3>Authentication</h3>
+
+            <p>
+              Authenticate requests with a Contact Engine API key. Keep keys server-side and never expose them in client-side applications.
+            </p>
+
+          </section>
+
+          <section id="quickstart">
+
+            <h3>Quickstart</h3>
+
+            <p>
+              A minimal request can start with a verified answer. The exact model routing and verification depth are determined by the operation and your configured usage.
+            </p>
+
+            <div class="docs-codebox">
+
+              <div class="docs-codehead">
+                <span>POST /api/answer</span>
+                <span>cURL</span>
+              </div>
+
+              <div class="docs-code"><span class="docs-method">curl</span> https://engine.contact/api/answer \
+  -H <span class="docs-key">"Authorization: Bearer $CONTACT_API_KEY"</span> \
+  -H <span class="docs-key">"Content-Type: application/json"</span> \
+  -d <span class="docs-key">'{"question":"What is the capital of USA?","depth":"verified"}'</span></div>
+
+            </div>
+
+          </section>
+
+          <section id="api-reference">
+
+            <h2>API Reference</h2>
+
+            <p>
+              Engine exposes focused intelligence operations so applications can choose the right depth and cost for each request.
+            </p>
+
+            <div class="docs-codebox">
+
+              <div class="docs-codehead">
+                <span>Endpoint</span>
+                <span>Example response</span>
+              </div>
+
+              <div class="docs-code"><span class="docs-method">POST</span> <span class="docs-path">/api/answer</span>
+<span class="docs-method">POST</span> <span class="docs-path">/api/verify</span>
+<span class="docs-method">POST</span> <span class="docs-path">/api/research</span>
+<span class="docs-method">POST</span> <span class="docs-path">/api/synthesis</span>
+
+{
+  <span class="docs-key">"answer"</span>: <span class="docs-value">"Tokyo"</span>,
+  <span class="docs-key">"status"</span>: <span class="docs-value">"verified"</span>,
+  <span class="docs-key">"credits"</span>: <span class="docs-value">2</span>
+}</div>
+
+            </div>
+
+          </section>
+
+          <section id="models">
+
+            <h3>Models</h3>
+
+            <p>
+              Engine can route work across supported frontier and specialist models. Model selection is an implementation detail when your application requests an intelligence operation rather than a specific provider.
+            </p>
+
+          </section>
+
+          <section id="verification">
+
+            <h3>Verification</h3>
+
+            <p>
+              Verification compares candidate outputs, identifies disagreement, checks evidence where available, and produces a confidence-aware synthesized result.
+            </p>
+
+          </section>
+
+          <section id="research">
+
+            <h3>Research</h3>
+
+            <p>
+              Research is intended for complex questions requiring deeper analysis, multiple passes, and broader evidence gathering.
+            </p>
+
+          </section>
+
+          <section id="synthesis">
+
+            <h3>Synthesis</h3>
+
+            <p>
+              Synthesis combines multiple model outputs or source materials into one structured result while preserving relevant distinctions and uncertainty.
+            </p>
+
+          </section>
+
+          <section id="credits">
+
+            <h3>Credits</h3>
+
+            <p>
+              Contact Credits are the usage unit across Contact AI products. Operations consume credits according to intelligence depth and workload.
+            </p>
+
+          </section>
+
+          <section id="rate-limits">
+
+            <h3>Rate Limits</h3>
+
+            <p>
+              Limits depend on account tier, endpoint, and usage profile. Higher-volume applications can request expanded capacity.
+            </p>
+
+          </section>
+
+          <section id="errors">
+
+            <h3>Errors</h3>
+
+            <p>
+              API errors use stable machine-readable codes with human-readable messages. Applications should handle authentication, validation, rate-limit, and provider failures explicitly.
+            </p>
+
+          </section>
+
+          <section id="sdks">
+
+            <h3>SDKs</h3>
+
+            <p>
+              Official SDKs can provide authentication helpers, typed requests, retries, and response handling for supported languages.
+            </p>
+
+          </section>
+
+          <footer class="docs-footer">
+            <span>© 2026 Starman Inc. · Contact™ Engine</span>
+            <span>Documentation is public · API access requires an account</span>
+          </footer>
+
+        </article>
+
+        <aside class="docs-right">
+
+          <div class="docs-toc-title">
+            ON THIS PAGE
+          </div>
+
+          <nav class="docs-toc">
+            <a href="#getting-started">Getting Started</a>
+            <a href="#authentication">Authentication</a>
+            <a href="#quickstart">Quickstart</a>
+            <a href="#api-reference">API Reference</a>
+          </nav>
+
+          <div class="docs-mini">
+            <div class="docs-mini-label">CURRENT</div>
+            <strong>Contact Engine API</strong>
+            <span>Public documentation preview</span>
+          </div>
+
+          <div class="docs-mini" id="pricing">
+            <div class="docs-mini-label">USAGE</div>
+            <strong>Credits-based</strong>
+            <span>Verified · Deep · Research</span>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

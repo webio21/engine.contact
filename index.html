@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contact™ Engine — AI Model Routing, Verification & Synthesis</title>
-
+<link rel="stylesheet" href="style.css">
 <meta
   name="description"
   content="Contact™ Engine is the intelligence engine behind Contact™, providing AI model routing, answer verification, cross-model analysis, and synthesis."
 >
-
 <meta
   name="robots"
   content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -68,446 +67,31 @@
 }
 </script>
 
-<style>
-:root{
-  color-scheme:light dark;
-  --bg:#f7f9fa;
-  --fg:#52666c;
-  --cyan:#00d9ff;
-  --cyan2:#00d2ff;
-  --dim:#9aabb0;
-  --faint:#dfe8eb
-}
-
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#05080b;
-    --fg:#7c969d;
-    --cyan:#00d2ff;
-    --cyan2:#59e7ff;
-    --dim:#35515a;
-    --faint:#10232a
-  }
-}
-
-*{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:var(--bg);
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace
-}
-
-#app{
-  position:relative;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:var(--bg);
-  color:var(--fg)
-}
-
-#app:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 50% 48%,rgba(0,210,255,.08),transparent 40%),
-    linear-gradient(90deg,rgba(0,210,255,.025) 1px,transparent 1px),
-    linear-gradient(rgba(0,210,255,.02) 1px,transparent 1px);
-  background-size:auto,48px 48px,48px 48px;
-  pointer-events:none
-}
-
-#app:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.08),
-      transparent 16%,
-      transparent 84%,
-      rgba(0,0,0,.08)
-    );
-  pointer-events:none
-}
-
-#stream{
-  position:absolute;
-  inset:-18vh -3vw;
-  display:grid;
-  grid-template-columns:repeat(14,minmax(0,1fr));
-  gap:0 .65vw;
-  transform:
-    perspective(1000px)
-    rotateX(5deg)
-    scale(1.08);
-  transform-origin:center;
-  opacity:.94
-}
-
-.column{
-  position:relative;
-  height:120%;
-  overflow:visible;
-  mask-image:
-    linear-gradient(
-      180deg,
-      transparent 0,
-      #000 6%,
-      #000 94%,
-      transparent 100%
-    );
-  -webkit-mask-image:
-    linear-gradient(
-      180deg,
-      transparent 0,
-      #000 6%,
-      #000 94%,
-      transparent 100%
-    )
-}
-
-.code{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  white-space:pre;
-  font-size:clamp(14px,4vw,36px);
-  line-height:1.08;
-  letter-spacing:.025em;
-  color:var(--dim);
-  font-weight:600;
-  will-change:transform;
-
-  animation-name:scroll;
-  animation-timing-function:linear;
-  animation-iteration-count:infinite;
-  animation-fill-mode:none
-}
-
-.code span{
-  display:block
-}
-
-.code .hot{
-  color:var(--cyan);
-  text-shadow:0 0 12px rgba(0,210,255,.3)
-}
-
-.code .mid{
-  color:#527985
-}
-
-.code .soft{
-  color:#28434b
-}
-
-.code .white{
-  color:#7eb8c3
-}
-
-/*
-  One complete code block = 100%.
-  Because two identical blocks exist inside .code,
-  moving exactly 50% creates a perfect seamless loop.
-*/
-@keyframes scroll{
-  from{
-    transform:translate3d(0,0,0)
-  }
-
-  to{
-    transform:translate3d(0,-50%,0)
-  }
-}
-
-/* ENGINE CORE */
-
-.core{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  pointer-events:none
-}
-
-.core-mark{
-  position:relative;
-  width:min(30vw,360px);
-  height:min(30vw,360px);
-  display:grid;
-  place-items:center
-}
-
-.core-mark:before,
-.core-mark:after{
-  content:"";
-  position:absolute;
-  border:1px solid rgba(0,210,255,.16);
-  border-radius:50%;
-  animation:pulse 4s ease-in-out infinite
-}
-
-.core-mark:before{
-  inset:15%
-}
-
-.core-mark:after{
-  inset:27%;
-  border-color:rgba(0,210,255,.3);
-  animation-delay:-1.2s
-}
-
-.orbit{
-  position:absolute;
-  inset:8%;
-  border:1px solid rgba(0,210,255,.11);
-  border-radius:50%;
-  animation:spin 13s linear infinite
-}
-
-.orbit i{
-  display:none;
-  position:absolute;
-  width:5px;
-  height:5px;
-  background:var(--cyan2);
-  border-radius:50%;
-  top:50%;
-  left:-2px;
-  box-shadow:
-    0 0 8px #00d2ff,
-    0 0 18px #00d2ff,
-    0 0 32px rgba(0,210,255,.8)
-}
-
-/* ENGINE LOGO */
-
-.logo{
-  position:relative;
-  width:100px;
-  height:100px;
-  border:1px solid rgba(0,210,255,.72);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  color:var(--cyan2);
-  font-size:11px;
-  letter-spacing:.18em;
-  text-align:center;
-  text-indent:0;
-  background:var(--bg);
-
-  box-shadow:
-    0 0 10px rgba(0,210,255,.45),
-    0 0 24px rgba(0,210,255,.28),
-    0 0 48px rgba(0,210,255,.16),
-    inset 0 0 18px rgba(0,210,255,.10),
-    inset 0 0 34px rgba(0,210,255,.05);
-
-  animation:logoGlow 3.2s ease-in-out infinite
-}
-
-.logo:before{
-  content:"";
-  position:absolute;
-  inset:8px;
-  border:1px solid rgba(0,210,255,.28);
-  border-radius:50%;
-  box-shadow:
-    0 0 10px rgba(0,210,255,.18),
-    inset 0 0 10px rgba(0,210,255,.08)
-}
-
-.logo b{
-  font-weight:500
-}
-
-/* HUD */
-
-.hud{
-  position:absolute;
-  inset:0;
-  padding:24px 28px;
-  pointer-events:auto;
-  color:var(--fg);
-  font-size:10px;
-  letter-spacing:.08em
-}
-
-.hud a{
-  pointer-events:auto;
-  color:var(--fg);
-  text-decoration:none;
-  cursor:pointer;
-  transition:
-    color .2s ease,
-    text-shadow .2s ease;
-}
-
-.hud a:hover{
-  color:var(--cyan2);
-  text-shadow:0 0 8px rgba(0,210,255,.45);
-}
-
-.tl{
-  position:absolute;
-  top:24px;
-  left:28px
-}
-
-.tr{
-  position:absolute;
-  top:24px;
-  right:28px;
-  text-align:right
-}
-
-.bl{
-  position:absolute;
-  bottom:24px;
-  left:28px
-}
-
-.br{
-  position:absolute;
-  bottom:24px;
-  right:28px;
-  text-align:right
-}
-
-.live{
-  color:var(--cyan2);
-  animation:blink 1.2s steps(2) infinite;
-  text-shadow:0 0 8px rgba(0,210,255,.45)
-}
-
-.line{
-  display:inline-block;
-  width:34px;
-  height:1px;
-  background:rgba(0,210,255,.3);
-  vertical-align:middle;
-  margin:0 8px
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg)
-  }
-}
-
-@keyframes pulse{
-  50%{
-    transform:scale(1.06);
-    opacity:.55
-  }
-}
-
-@keyframes blink{
-  50%{
-    opacity:.35
-  }
-}
-
-@keyframes logoGlow{
-  0%,100%{
-    filter:brightness(1);
-  }
-
-  50%{
-    filter:brightness(1.18);
-  }
-}
-
-/* MOBILE */
-
-@media(max-width:760px){
-
-  #stream{
-    grid-template-columns:repeat(7,minmax(0,1fr));
-    gap:0 2vw
-  }
-
-  .column:nth-child(n+8){
-    display:none
-  }
-
-  .code{
-    font-size:clamp(12px,4vw,24px);
-    line-height:1.08;
-    letter-spacing:0;
-  }
-
-  .column{
-    overflow:hidden;
-  }
-
-  .hud{
-    padding:18px;
-    font-size:8px
-  }
-
-  .tl{
-    top:18px;
-    left:18px
-  }
-
-  .tr{
-    top:18px;
-    right:18px
-  }
-
-  .bl{
-    bottom:18px;
-    left:18px
-  }
-
-  .br{
-    bottom:18px;
-    right:18px
-  }
-
-  .core-mark{
-    width:64vw;
-    height:64vw
-  }
-
-  .logo{
-    width:85px;
-    height:85px;
-    font-size:9px
-  }
-}
-</style>
 </head>
 
 <body>
 
 <div id="app">
-
   <div id="stream"></div>
-
   <div class="core">
     <div class="core-mark">
       <div class="orbit"><i></i></div>
-      <div class="logo">
-        <b>CONTACT<br>ENGINE</b>
-      </div>
-    </div>
+      <a class="logo-link" href="https://engine.contact/api">
+        <div class="logo">
+          <b>GET<br>CONTACT<br>ENGINE<br>API</b>
+        </div>
+        <img class="logo-overlay" src="logo.png" alt="CONTACT ENGINE LOGO">
+      </a>
   </div>
+
+    <div class="auth">
+      <a href="https://dash.contact/login"><b>LOGIN</b></a>
+      <span class="line"></span>
+      <a href="https://dash.contact/signup"><b>SIGN UP</b></a>
+    </div>
 
   <div class="hud">
     <div class="tl">
-      <span class="live">● LIVE</span>
-      <span class="line"></span>
       CONTACT™ ENGINE
     </div>
 
@@ -516,15 +100,15 @@ html,body{
       00:00:00.000
     </div>
 
-    <div class="bl">
-      <a href="https://answer.contact">CONTACT™ ANSWER</a>
-      <span class="line"></span>
-      MODEL ROUTING / VERIFY / SYNTHESIS
-    </div>
-
     <div class="br">
       PROCESSING<br>
       <span class="live">ACTIVE</span>
+    </div>
+
+    <div class="bl">
+      <a href="documentation"><b>DOCUMENTATION</b></a>
+      <span class="line"></span>
+      MODEL ROUTING / VERIFY / SYNTHESIS
     </div>
   </div>
 
@@ -543,13 +127,6 @@ const randomCode = (length=22) =>
     () => chars[Math.floor(Math.random()*chars.length)]
   ).join('');
 
-
-/*
-  Generate one complete code block.
-  It is duplicated immediately afterward.
-  The animation moves exactly one copy upward,
-  creating a continuous infinite stream.
-*/
 const codeLength = 4;
 
 for(let c=0;c<14;c++){
@@ -577,26 +154,10 @@ for(let c=0;c<14;c++){
       `<span class="${cls}">${randomCode(codeLength)}</span>`;
   }
 
-  /*
-    Duplicate the exact same stream.
-    Do not generate different content for the second copy.
-  */
-
   code.innerHTML = html + html;
-
-  /*
-    Every column begins immediately.
-    Different durations preserve the original
-    layered/random movement.
-  */
 
   code.style.animationDuration =
     (42 + c * 1) + 's';
-
-  /*
-    Negative delay means the stream is already moving
-    on first paint rather than waiting for animation to begin.
-  */
 
   code.style.animationDelay =
     (-c * .65) + 's';
@@ -605,13 +166,6 @@ for(let c=0;c<14;c++){
   stream.appendChild(col);
 }
 
-
-/*
-  Keep the code itself changing while the stream
-  continues moving. This does not affect the loop
-  position because the duplicated structure remains.
-*/
-
 setInterval(()=>{
   document.querySelectorAll('.code span').forEach(el=>{
     if(Math.random()<.025){
@@ -619,11 +173,6 @@ setInterval(()=>{
     }
   });
 },120);
-
-
-/*
-  Live analysis clock
-*/
 
 setInterval(()=>{
 
@@ -635,6 +184,17 @@ setInterval(()=>{
 
 },37);
 
+const logoOverlay = document.querySelector('.logo-overlay');
+
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    logoOverlay.classList.add('show');
+  });
+});
+
+setTimeout(() => {
+  logoOverlay.classList.remove('show');
+}, 1800);
 </script>
 
 </body>
