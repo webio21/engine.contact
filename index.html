@@ -80,7 +80,8 @@
         <div class="logo">
           <b>GET<br>CONTACT<br>ENGINE<br>API</b>
         </div>
-        <img class="logo-overlay" src="logo.png" alt="CONTACT ENGINE LOGO">
+        <img class="logo-overlay" src="img/logo.png" alt="CONTACT ENGINE LOGO">
+        <img class="logo-blink" src="img/logo2.png" alt="CONTACT ENGINE LOGO" aria-hidden="true">
       </a>
   </div>
 
@@ -92,23 +93,17 @@
 
   <div class="hud">
     <div class="tl">
-      CONTACT™ ENGINE
+      CONTACT™ ENGINE<br>
+      INTELLIGENCE_API
     </div>
 
     <div class="tr">
-      ANALYSIS STREAM<br>
-      00:00:00.000
-    </div>
-
-    <div class="br">
-      PROCESSING<br>
-      <span class="live">ACTIVE</span>
     </div>
 
     <div class="bl">
       <a href="documentation"><b>DOCUMENTATION</b></a>
       <span class="line"></span>
-      MODEL ROUTING / VERIFY / SYNTHESIS
+      MODEL_ROUTING / VERIFICATION / SYNTHESIS
     </div>
   </div>
 
@@ -174,10 +169,12 @@ setInterval(()=>{
   });
 },120);
 
+const utcTime = document.getElementById('utc-time');
+
 setInterval(()=>{
 
   document.querySelector('.tr').innerHTML =
-    'ANALYSIS STREAM<br>' +
+    'UTC_' +
     new Date()
       .toISOString()
       .slice(11,23);
@@ -195,6 +192,14 @@ requestAnimationFrame(() => {
 setTimeout(() => {
   logoOverlay.classList.remove('show');
 }, 1800);
+
+document.querySelector('.logo-link')?.addEventListener(
+    'pointerenter',
+    event => {
+        event.currentTarget.classList.add('has-hovered');
+    },
+    { once: true }
+);
 </script>
 
 </body>

@@ -289,6 +289,36 @@ html,body{
   filter:blur(0) brightness(1);
 }
 
+.logo-blink {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 11;
+    animation: logoWink 140ms ease 1.15s both;
+}
+
+@keyframes logoWink {
+    0%, 100% {
+        opacity: 0;
+    }
+
+    15%, 85% {
+        opacity: 1;
+    }
+}
+
+.logo-link.has-hovered .logo-blink {
+    animation: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 .hud{
   position:absolute;
   inset:0;
@@ -350,8 +380,9 @@ html,body{
 }
 
 .tr{
+  color:var(--cyan);
   position:absolute;
-  top:42px;
+  top:48px;
   left:28px;
   right:auto;
   text-align:left;
@@ -372,7 +403,7 @@ html,body{
   text-align:left;
 }
 
-.live{
+.ready{
   color:var(--cyan);
   animation:blink 1.2s steps(2) infinite;
   text-shadow:0 0 8px rgba(0,210,255,.45);
@@ -495,7 +526,12 @@ html,body{
   .logo-overlay{
     width:65px;
     height:65px;
-}
+  }
+
+  .logo-blink {
+    width: 65px;
+    height: 65px;
+  }
 }
 
 /* =========================================================
@@ -526,12 +562,6 @@ a{
 .docs-brand:active{
   color:var(--text);
   text-decoration:none;
-}
-
-.docs-brand,
-.docs-sidebar,
-.docs-topbar{
-  box-shadow:0 4px 8px rgba(0,0,0,.50);
 }
 
 .docs-brand{
@@ -912,34 +942,6 @@ a{
   line-height:1.7;
 }
 
-.docs-codebox{
-  background:#05080b;
-  border:1px solid #17282e;
-  border-radius:9px;
-  overflow:hidden;
-  margin:20px 0 30px;
-}
-
-.docs-codehead{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 12px;
-  border-bottom:1px solid #17282e;
-  color:#6d8b93;
-  font-size:9px;
-}
-
-.docs-code{
-  padding:17px 18px;
-  color:#d8faff;
-  font-size:11px;
-  line-height:1.75;
-  overflow:auto;
-  white-space:pre;
-}
-
-
-
 /* =========================================================
    CODE
    ========================================================= */
@@ -975,7 +977,7 @@ a{
 }
 
 .docs-path{
-  color:#d9f7fc;
+  color:#59e7ff;
 }
 
 .docs-key{
@@ -1097,14 +1099,14 @@ a{
   }
 
   .docs-sidebar{
-    top:40px;
+    top:42px;
     bottom:auto;
     width:100%;
     height:auto;
     max-height:210px;
     border-right:0;
     border-bottom:1px solid var(--border);
-    background:rgba(0,0,0,.55);
+    background:var(--sidebar);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     padding:10px 12px;
